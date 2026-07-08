@@ -484,16 +484,28 @@
   }
 
   async function loadFiles(fileList) {
-    const files = Array.from(fileList).filter(f =>
-      /\.(md|markdown|txt)$/i.test(f.name) ||
-      /text\/(markdown|plain)/.test(f.type)
-    );
-    if (files.length === 0) {
-      alert('Por favor selecciona archivos .md, .markdown o .txt.');
-      return;
+    const all = Array.from(fileList);
+    const valid = [];
+    const rejected = [];
+    for (const f of all) {
+      if (/\.(md|markdown)$/i.test(f.name)) valid.push(f);
+      else rejected.push(f);
     }
+
+    // Notificar cada archivo rechazado por nombre
+    for (const f of rejected) {
+      showToast({
+        type: 'error',
+        title: 'Archivo no soportado',
+        detail: `"${f.name}" no se cargó porque no es un archivo .md`,
+        duration: 5000,
+      });
+    }
+
+    if (valid.length === 0) return;
+
     const errors = [];
-    for (const f of files) {
+    for (const f of valid) {
       try {
         const text = await f.text();
         const fd = createFileData(f.name, f.size, text);
@@ -502,12 +514,50 @@
         errors.push(`${f.name}: ${err.message || err}`);
       }
     }
-    if (errors.length) alert('Algunos archivos no se pudieron leer:\n' + errors.join('\n'));
+
+    if (errors.length) {
+      showToast({
+        type: 'error',
+        title: 'No se pudo leer el archivo',
+        detail: errors.join('\n'),
+        duration: 6000,
+      });
+    }
+
     if (!state.active && state.files.size > 0) {
       state.active = state.files.keys().next().value;
     }
     $('#search').value = state.active ? state.files.get(state.active).searchTerm : '';
     renderAll();
+  }
+
+  // ============================================================
+  // Toast notifications
+  // ============================================================
+  function showToast({ title, detail, type = 'info', duration = 4000 }) {
+    const container = $('#toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    const icon = type === 'error' ? '✗' : type === 'warn' ? '!' : type === 'success' ? '✓' : 'i';
+    toast.innerHTML = `
+      <span class="toast-icon" aria-hidden="true">${icon}</span>
+      <div class="toast-body">
+        <div class="toast-title">${escapeHtml(title)}</div>
+        ${detail ? `<div class="toast-detail">${escapeHtml(detail)}</div>` : ''}
+      </div>
+      <button class="toast-close" type="button" aria-label="Cerrar notificación">×</button>
+    `;
+    container.appendChild(toast);
+    const dismiss = () => {
+      if (toast.classList.contains('dismissing')) return;
+      toast.classList.add('dismissing');
+      setTimeout(() => toast.remove(), 200);
+    };
+    toast.querySelector('.toast-close').addEventListener('click', dismiss);
+    if (duration > 0) setTimeout(dismiss, duration);
+    return dismiss;
   }
 
   function exportTree() {

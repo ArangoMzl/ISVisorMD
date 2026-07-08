@@ -28,7 +28,7 @@
           <p class="muted">o</p>
           <label class="btn btn-primary">
             Seleccionar archivos
-            <input type="file" id="file-input" accept=".md,.markdown,.txt,text/markdown,text/plain" multiple hidden>
+            <input type="file" id="file-input" accept=".md,.markdown,text/markdown" multiple hidden>
           </label>
           <p class="hint">Todo se procesa en tu navegador. Nada se sube a ningún servidor.</p>
         </div>
@@ -88,6 +88,8 @@
   <footer class="footer">
     <p>ISVisorMD — InSoft. Procesamiento 100% local, ningún archivo sale del navegador.</p>
   </footer>
+
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="false"></div>
 
   <script src="assets/app.js"></script>
 </body>

@@ -429,3 +429,87 @@ body::-webkit-scrollbar-thumb {
 }
 .tree::-webkit-scrollbar-thumb:hover,
 body::-webkit-scrollbar-thumb:hover { background: var(--bg-hover); }
+
+/* ============================================================
+   Toast notifications
+   ============================================================ */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  max-width: 360px;
+}
+.toast {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px 10px 14px;
+  box-shadow: var(--shadow);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  pointer-events: auto;
+  font-size: 13px;
+  animation: toast-in 0.2s ease-out;
+  min-width: 260px;
+}
+.toast.error   { border-left-color: var(--fail); }
+.toast.warn    { border-left-color: var(--warn); }
+.toast.success { border-left-color: var(--pass); }
+.toast-icon {
+  flex-shrink: 0;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  margin-top: 1px;
+}
+.toast.error   .toast-icon { background: var(--fail); color: var(--fail-ink); }
+.toast.warn    .toast-icon { background: var(--warn); color: var(--warn-ink); }
+.toast.success .toast-icon { background: var(--pass); color: var(--pass-ink); }
+.toast.info    .toast-icon { background: var(--accent); color: var(--accent-ink); }
+.toast-body { flex: 1; min-width: 0; }
+.toast-title { font-weight: 600; }
+.toast-detail {
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-top: 2px;
+  overflow-wrap: break-word;
+}
+.toast-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 4px;
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.toast-close:hover { color: var(--text); }
+.toast.dismissing { animation: toast-out 0.2s ease-in forwards; }
+@keyframes toast-in {
+  from { transform: translateX(20px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+@keyframes toast-out {
+  to { transform: translateX(20px); opacity: 0; }
+}
+@media (max-width: 600px) {
+  .toast-container {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+  }
+}
