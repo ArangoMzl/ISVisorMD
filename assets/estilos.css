@@ -283,16 +283,28 @@ code {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   color: var(--text-muted);
+  background: var(--bg-elev-2);
+  border: 1px solid var(--border);
   cursor: pointer;
   user-select: none;
   flex-shrink: 0;
-  font-size: 10px;
-  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 4px;
+  transition: background 0.1s, color 0.1s, border-color 0.1s;
 }
-.tree-toggle:hover { color: var(--accent); background: var(--accent-soft); }
+.tree-toggle:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.tree-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
 .tree-toggle.empty { visibility: hidden; }
 .tree-level {
   display: inline-block;
