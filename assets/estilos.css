@@ -47,6 +47,8 @@ html, body {
   min-height: 100vh;
 }
 
+body { padding-bottom: 56px; /* espacio para el footer fijo */ }
+
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
@@ -406,12 +408,17 @@ mark {
    Footer
    ============================================================ */
 .footer {
-  padding: 16px 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 20px;
   text-align: center;
   color: var(--text-muted);
   font-size: 12px;
+  background: var(--bg-elev);
   border-top: 1px solid var(--border);
-  margin-top: 16px;
+  z-index: 5;
 }
 .footer p { margin: 0; }
 
@@ -435,7 +442,7 @@ body::-webkit-scrollbar-thumb:hover { background: var(--bg-hover); }
    ============================================================ */
 .toast-container {
   position: fixed;
-  bottom: 20px;
+  bottom: 60px;
   right: 20px;
   z-index: 1000;
   display: flex;
