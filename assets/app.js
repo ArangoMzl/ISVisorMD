@@ -378,7 +378,7 @@
 
   function renderNodeHtml(n, term, isExpanded, isInSearch) {
     const hasChildren = n.children.length > 0;
-    const toggleChar = !hasChildren ? '' : (isExpanded ? '▼' : '▶');
+    const toggleChar = !hasChildren ? '' : (isExpanded ? '▾' : '▸');
     const toggleClass = hasChildren ? 'tree-toggle' : 'tree-toggle empty';
     const textHtml = isInSearch
       ? highlight(n.text, n.text.toLowerCase().includes(term.toLowerCase()) ? term : '')
