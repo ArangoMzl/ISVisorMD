@@ -75,19 +75,6 @@ code {
   z-index: 10;
 }
 .brand { display: flex; align-items: center; gap: 12px; }
-.brand-logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  border-radius: var(--radius-sm);
-  font-weight: 700;
-  font-size: 20px;
-  flex-shrink: 0;
-}
 .brand h1 {
   margin: 0;
   font-size: 16px;
