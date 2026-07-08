@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ISVisorMD — visor de Markdown estático para InSoft. Revisa la estructura de archivos .md grandes localmente en tu navegador.">
+  <meta name="color-scheme" content="dark">
+  <title>ISVisorMD — InSoft</title>
+  <link rel="stylesheet" href="assets/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-logo" aria-hidden="true">≡</span>
+      <h1>ISVisorMD <span class="brand-sub">— InSoft</span></h1>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="btn-clear-all" type="button" title="Cerrar todos los archivos">Cerrar todo</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Columna izquierda: carga + pestañas -->
+    <section class="col col-left" aria-label="Carga de archivos">
+      <div class="card">
+        <div class="drop-zone" id="drop-zone" tabindex="0" role="button" aria-label="Soltar archivos Markdown aquí">
+          <div class="drop-icon" aria-hidden="true">↑</div>
+          <p class="drop-title">Arrastra archivos <code>.md</code> aquí</p>
+          <p class="muted">o</p>
+          <label class="btn btn-primary">
+            Seleccionar archivos
+            <input type="file" id="file-input" accept=".md,.markdown,.txt,text/markdown,text/plain" multiple hidden>
+          </label>
+          <p class="hint">Todo se procesa en tu navegador. Nada se sube a ningún servidor.</p>
+        </div>
+      </div>
+      <div class="card file-tabs-card" id="file-tabs-card" hidden>
+        <h2 class="card-title">Archivos cargados</h2>
+        <ul class="file-tabs" id="file-tabs" role="tablist"></ul>
+      </div>
+    </section>
+
+    <!-- Columna central: árbol + búsqueda -->
+    <section class="col col-center" aria-label="Árbol de encabezados">
+      <div class="card card-tree">
+        <div class="toolbar">
+          <input type="search" id="search" placeholder="Buscar en encabezados..." aria-label="Buscar en encabezados" autocomplete="off">
+          <button class="btn-icon" id="btn-expand-all" type="button" title="Expandir todo" aria-label="Expandir todo">⊞</button>
+          <button class="btn-icon" id="btn-collapse-all" type="button" title="Colapsar todo" aria-label="Colapsar todo">⊟</button>
+        </div>
+        <div class="tree" id="tree" role="tree" aria-label="Árbol de encabezados">
+          <p class="empty-state">
+            Carga uno o varios archivos <code>.md</code> para ver el árbol de encabezados.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Columna derecha: validaciones + estadísticas + exportar -->
+    <aside class="col col-right" aria-label="Información del archivo">
+      <div class="card">
+        <h2 class="card-title">Validaciones</h2>
+        <ul class="validations" id="validations">
+          <li class="muted validations-empty">Carga un archivo para ejecutar las validaciones.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Estadísticas</h2>
+        <dl class="stats" id="stats">
+          <dt>Archivo</dt><dd id="stat-file" class="muted">—</dd>
+          <dt>Tamaño</dt><dd id="stat-size" class="muted">—</dd>
+          <dt>Total encabezados</dt><dd id="stat-total">0</dd>
+          <dt>H1</dt><dd id="stat-h1">0</dd>
+          <dt>H2</dt><dd id="stat-h2">0</dd>
+          <dt>H3</dt><dd id="stat-h3">0</dd>
+          <dt>H4</dt><dd id="stat-h4">0</dd>
+          <dt>H5</dt><dd id="stat-h5">0</dd>
+          <dt>H6</dt><dd id="stat-h6">0</dd>
+        </dl>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Exportar</h2>
+        <button class="btn btn-primary btn-block" id="btn-export" type="button">Copiar árbol como texto</button>
+        <p class="hint" id="export-hint" aria-live="polite"></p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <p>ISVisorMD — InSoft. Procesamiento 100% local, ningún archivo sale del navegador.</p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
